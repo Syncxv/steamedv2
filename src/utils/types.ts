@@ -13,7 +13,8 @@ export interface Author {
 export interface Patch {
 	find: string;
 	predicate?: () => boolean;
-	replacement: Replacement[];
+	replacement: Replacement[] | Replacement;
+	plugin?: string;
 }
 
 export type ReplaceFn = (match: string, ...groups: string[]) => string;

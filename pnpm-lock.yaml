@@ -26,6 +26,9 @@ devDependencies:
   tsx:
     specifier: ^3.12.10
     version: 3.12.10
+  vdf-parser:
+    specifier: ^1.2.1
+    version: 1.2.1
 
 packages:
 
@@ -620,6 +623,10 @@ packages:
       '@esbuild-kit/esm-loader': 2.6.5
     optionalDependencies:
       fsevents: 2.3.3
+    dev: true
+
+  /vdf-parser@1.2.1:
+    resolution: {integrity: sha512-g5c73LP8NSebruEiVjOpV6KlN6xgVXBXc5UbexHWzjkatLJR++gUBhg76YqfJ9j4ZLfZ+Hv00592uiDywR+dWg==}
     dev: true
 
   /webidl-conversions@7.0.0:

@@ -15,4 +15,12 @@ export const stop = () => {
 	console.log("test stopped");
 };
 
-export const patches: Patch[] = [];
+export const patches: Patch[] = [
+	{
+		find: "SteamApp Init - Before Login",
+		replacement: {
+			match: /SteamApp Init - Before Login/,
+			replace: "$& WOAH",
+		},
+	},
+];

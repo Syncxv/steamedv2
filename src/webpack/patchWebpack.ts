@@ -30,11 +30,11 @@ if (window[WEBPACK_CHUNK]) {
 function patchPush() {
 	function handlePush(chunk: any) {
 		try {
-			console.log(chunk);
-
 			const modules = chunk[1];
 			const { subscriptions, listeners } = Steamed.Webpack;
-			// const { patches } = Steamed.Plugins;
+			const { patches } = Steamed.Plugins;
+
+			console.log(modules, patches);
 		} catch (err) {}
 
 		return handlePush.original.call(window[WEBPACK_CHUNK], chunk);

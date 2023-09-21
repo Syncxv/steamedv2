@@ -5,10 +5,10 @@ export * as Api from "./api";
 export { PlainSettings, Settings };
 
 import "./webpack/patchWebpack";
-import { PlainSettings, Settings, init as settingsInit } from "./api/Settings";
+import { PlainSettings, Settings, init as huh } from "./api/Settings";
 import { startAllPlugins } from "./plugins";
 
 export async function init() {
-	await settingsInit();
+	await huh();
 	startAllPlugins();
 }

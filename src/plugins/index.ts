@@ -19,6 +19,17 @@ export function isPluginEnabled(p: string) {
 	);
 }
 
+for (const p of pluginArr) {
+	if (p.patches && isPluginEnabled(p.manifest.name)) {
+		for (const patch of p.patches) {
+			patch.plugin = p.manifest.name;
+			if (!Array.isArray(patch.replacement))
+				patch.replacement = [patch.replacement];
+			patches.push(patch);
+		}
+	}
+}
+
 export function startAllPlugins() {
 	for (const p of pluginArr) {
 		const { name } = p.manifest;

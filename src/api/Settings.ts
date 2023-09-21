@@ -17,19 +17,26 @@ export interface Settings {
 // ill add some when we need it
 const DefaultSettings: Settings = { plugins: {} };
 
-let settings: Settings | undefined = DefaultSettings;
+// try {
+// 	const str = window.settingsString;
+// 	var settings: Settings = JSON.parse(str);
+// 	mergeDefaults(settings, DefaultSettings);
+
+// 	console.log("settings = ", settings);
+// } catch (err) {
+// 	console.error("welp");
+// 	var settings: Settings = mergeDefaults({} as Settings, DefaultSettings);
+// }
 
 export async function init() {
-	const _settings: Settings = await getSettings();
-	mergeDefaults(_settings, DefaultSettings);
+	const settings = getSettings();
 
-	settings = _settings;
 	Settings = makeProxy(settings);
 }
 
 export async function getSettings() {
 	try {
-		const str = await SteamClient.Storage.GetString("steamed_settings");
+		const str = await SteamClient.MachineStorage.GetString("steamed_settings");
 		return JSON.parse(str);
 	} catch (err) {
 		console.error("failed to load settings", err);
@@ -38,7 +45,7 @@ export async function getSettings() {
 }
 
 export async function setSettings(settins: string) {
-	await SteamClient.Storage.SetString("steamed_settings", settins);
+	await SteamClient.MachineStorage.SetString("steamed_settings", settins);
 }
 
 type SubscriptionCallback = ((newValue: any, path: string) => void) & {
@@ -127,11 +134,11 @@ function makeProxy(settings: any, root = settings, path = ""): Settings {
  * settings for which you specified a default value may be uninitialised. If you need proper
  * handling for default values, use {@link Settings}
  */
-export const PlainSettings = settings;
+export const PlainSettings = DefaultSettings;
 
 /**
  * A smart settings object. Altering props automagically saves
  * the updated settings to disk.
  * This recursively proxies objects. If you need the object non proxied, use {@link PlainSettings}
  */
-export let Settings: Settings = DefaultSettings;
+export let Settings: Settings;

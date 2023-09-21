@@ -1,3 +1,11 @@
+export interface Storage {
+	GetString: (name: string) => Promise<string>;
+	SetString: (name: string, value: string) => Promise<void>;
+	GetJSON: (name: string) => Promise<string>;
+	SetObject: (name: string, object: Record<any, any> | string) => Promise<void>;
+	DeleteKey: (name: string) => Promise<void>;
+}
+
 //TODO: type all these functions
 export interface TSteamClient {
 	Browser: {
@@ -341,30 +349,9 @@ export interface TSteamClient {
 		RegisterForMessages: Function;
 		PostMessage: Function;
 	};
-	Storage: {
-		GetString: (name: string) => Promise<string>;
-		SetString: (name: string, value: string) => Promise<any>;
-		GetJSON: (name: string) => Promise<string>;
-		SetObject: (
-			name: string,
-			object: Record<any, any> | string
-		) => Promise<any>;
-		DeleteKey: Function;
-	};
-	RoamingStorage: {
-		GetString: Function;
-		SetString: Function;
-		GetJSON: Function;
-		SetObject: Function;
-		DeleteKey: Function;
-	};
-	MachineStorage: {
-		GetString: Function;
-		SetString: Function;
-		GetJSON: Function;
-		SetObject: Function;
-		DeleteKey: Function;
-	};
+	Storage: Storage;
+	RoamingStorage: Storage;
+	MachineStorage: Storage;
 	FriendSettings: {
 		RegisterForSettingsChanges: Function;
 		SetFriendSettings: Function;
