@@ -4,8 +4,8 @@ GlobalRegistrator.register();
 
 import { existsSync } from "node:fs";
 import fs from "node:fs/promises";
-import { isWsl } from "./util/isWsl.mjs";
 import path from "node:path";
+import { isWsl } from "./util/isWsl.mjs";
 import { build } from "../build/build.mjs";
 
 const wsl = isWsl();
@@ -25,7 +25,7 @@ function html(strings, ...values) {
 	const div = document.createElement("div");
 	div.innerHTML = content;
 
-	return div.firstElementChild;
+	return div.firstElementChild!;
 }
 
 async function main() {
@@ -41,7 +41,7 @@ async function main() {
 	);
 	document.documentElement.innerHTML = sharedJsContextHTML;
 	const toSwap = document.head.querySelector('[src^="/libraries/"]');
-	document.head.insertBefore(toSwap, toSwap.previousElementSibling);
+	document.head.insertBefore(toSwap!, toSwap!.previousElementSibling);
 
 	document.head.prepend(html`<script src="./steamed.js"></script>`);
 

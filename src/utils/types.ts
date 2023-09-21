@@ -22,3 +22,9 @@ export interface Replacement {
 	replace: string | ReplaceFn;
 	predicate?(): boolean;
 }
+
+export interface Plugin {
+	manifest: Manifest;
+	patches: Patch[];
+	[key: string]: any;
+}

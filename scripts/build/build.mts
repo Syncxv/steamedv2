@@ -1,17 +1,6 @@
 import esbuild from "esbuild";
 import URL from "node:url";
-
-export const watch = process.argv.includes("--watch");
-
-/**
- * @type {import("esbuild").BuildOptions}
- */
-export const commonOpts = {
-	logLevel: "info",
-	bundle: true,
-	minify: !watch,
-	sourcemap: watch ? "inline" : "",
-};
+import { commonOpts, globPlugins, watch } from "./common.mjs";
 
 export async function build() {
 	return new Promise(async (res) => {
@@ -36,6 +25,6 @@ export async function build() {
 const __filename = URL.fileURLToPath(import.meta.url);
 // const __dirname = dirname(__filename);
 if (process.argv[1] === __filename) {
-	console.log("BUILDING");
+	console.log("Main Building");
 	build();
 }

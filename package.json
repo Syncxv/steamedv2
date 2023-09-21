@@ -4,17 +4,19 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"build": "node scripts/build/build.mjs",
-		"inject": "node scripts/inject/index.mjs"
+		"build": "tsx scripts/build/build.mts",
+		"inject": "tsx scripts/inject/index.mts"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
 		"@happy-dom/global-registrator": "^12.1.5",
+		"@types/node": "^20.6.3",
 		"@types/react": "^18.2.22",
 		"@types/react-dom": "^18.2.7",
 		"esbuild": "^0.19.3",
-		"mobx": "^5.0.0"
+		"mobx": "^5.0.0",
+		"tsx": "^3.12.10"
 	}
 }
