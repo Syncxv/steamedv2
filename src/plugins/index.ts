@@ -25,7 +25,6 @@ export function startAllPlugins() {
 
 		if (Settings.plugins[name]?.enabled) {
 			if (p.start) {
-				debugger;
 				logger.info("Starting plugin", name);
 				if (p.started) {
 					logger.warn(`${name} already started`);
