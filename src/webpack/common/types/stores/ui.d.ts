@@ -1,5 +1,5 @@
-import { CMInterface } from "../global/CMInterface";
-import { GenericCallbackObject } from "../global/friendsUiApp";
+import { CMInterface } from "../misc/CMInterface";
+import { GenericCallbackObject } from "../misc/friendsUiApp";
 import { ChatStore } from "./chat";
 
 export interface UIStore {

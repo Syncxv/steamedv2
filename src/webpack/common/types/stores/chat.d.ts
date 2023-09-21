@@ -1,5 +1,5 @@
 import { ObservableMap } from "mobx";
-import { CMInterface } from "../global/CMInterface";
+import { CMInterface } from "../misc/CMInterface";
 
 export interface ChatRoomEffectSetting {
 	buttonToken: `#ChatRoomEffect_${string}`;

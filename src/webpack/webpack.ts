@@ -1,7 +1,13 @@
-import type WebpackInstance from "types/WebpackInstance";
+import { WebpackInstance } from "@webpack/types";
 
 export let wreq: WebpackInstance;
 export let cache: WebpackInstance["c"];
+
+export type FilterFn = (mod: any) => boolean;
+export type CallbackFn = (mod: any, id: number) => void;
+
+export const subscriptions = new Map<FilterFn, CallbackFn>();
+export const listeners = new Set<CallbackFn>();
 
 function extractPrivateCache(wreq: WebpackInstance) {
 	let cache: any;
@@ -56,13 +62,19 @@ Object.defineProperty(Function.prototype, "m", {
 
 export const filters = {
 	byProps:
-		(...props) =>
+		(...props): FilterFn =>
 		(m) =>
 			props.every((p) => m[p] !== void 0),
-	byDisplayName: (displayName) => (m) => m.displayName === displayName,
-	byName: (name) => (m) => m.name === name,
+	byDisplayName:
+		(displayName): FilterFn =>
+		(m) =>
+			m.displayName === displayName,
+	byName:
+		(name): FilterFn =>
+		(m) =>
+			m.name === name,
 	byCode:
-		(...codes) =>
+		(...codes): FilterFn =>
 		(m) => {
 			if (typeof m !== "function") return false;
 			const code = Function.prototype.toString.call(m);
@@ -80,7 +92,7 @@ export const filters = {
 		},
 };
 
-export function find(filter) {
+export function find(filter: FilterFn) {
 	const values = Object.values(cache);
 	for (const { exports } of values) {
 		if (exports && filter(exports)) return exports;
@@ -96,7 +108,7 @@ export function find(filter) {
 	return null;
 }
 
-export function findAll(filter) {
+export function findAll(filter: FilterFn) {
 	const results: WebpackInstance["c"][] = [];
 	const values = Object.values(cache);
 	for (const { exports } of values) {

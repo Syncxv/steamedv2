@@ -6,7 +6,7 @@ import { existsSync } from "node:fs";
 import fs from "node:fs/promises";
 import { isWsl } from "./util/isWsl.mjs";
 import path from "node:path";
-import { build } from "../build.mjs";
+import { build } from "../build/build.mjs";
 
 const wsl = isWsl();
 const args = process.argv.slice(2);

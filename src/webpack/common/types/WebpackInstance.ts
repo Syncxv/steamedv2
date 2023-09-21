@@ -1,5 +1,5 @@
 export type whatMiniCssJ = { miniCss: Function; j: Function };
-export default interface WebpackInstance {
+export interface WebpackInstance {
 	(id: number): any;
 	E: Function;
 	F: { j: Function };

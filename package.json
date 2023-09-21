@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"build": "node scripts/build.mjs",
+		"build": "node scripts/build/build.mjs",
 		"inject": "node scripts/inject/index.mjs"
 	},
 	"keywords": [],

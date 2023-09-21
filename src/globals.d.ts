@@ -1,12 +1,12 @@
-import { FriendsUIApp } from "./friendsUiApp";
-import { PopupManager } from "./popup";
+import { FriendsUIApp } from "./webpack/common/types/misc/friendsUiApp";
+import { PopupManager } from "./webpack/common/types/misc/popup";
 
 declare global {
-	export var Steamed: typeof import("../../Steamed");
+	export var Steamed: typeof import("./Steamed");
 	export var g_PopupManager: PopupManager;
 	export var g_FriendsUIApp: FriendsUIApp;
 	interface Window {
-		webpackChunkfriendsui: {
+		webpackChunksteamui: {
 			push(chunk: any): any;
 			pop(): any;
 		};
@@ -28,4 +28,4 @@ export interface WebpackRequire extends Function {
 
 export type RawModule = (what: any, exports: any, n: WebpackRequire) => any;
 
-export * from "./popup";
+export * from "./webpack/common/types/misc/popup";
