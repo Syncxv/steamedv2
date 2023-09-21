@@ -342,10 +342,13 @@ export interface TSteamClient {
 		PostMessage: Function;
 	};
 	Storage: {
-		GetString: Function;
-		SetString: Function;
+		GetString: (name: string) => Promise<string>;
+		SetString: (name: string, value: string) => Promise<any>;
 		GetJSON: (name: string) => Promise<string>;
-		SetObject: (name: string, object: Record<any, any>) => Promise<any>;
+		SetObject: (
+			name: string,
+			object: Record<any, any> | string
+		) => Promise<any>;
 		DeleteKey: Function;
 	};
 	RoamingStorage: {

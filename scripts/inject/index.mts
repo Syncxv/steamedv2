@@ -43,7 +43,8 @@ async function main() {
 	const toSwap = document.head.querySelector('[src^="/libraries/"]');
 	document.head.insertBefore(toSwap!, toSwap!.previousElementSibling);
 
-	document.head.prepend(html`<script src="./steamed.js"></script>`);
+	if (!document.head.querySelector('script[src="./steamed.js"]'))
+		document.head.prepend(html`<script src="./steamed.js"></script>`);
 
 	const steamedContents = await fs.readFile("dist/main.js", "utf-8");
 
