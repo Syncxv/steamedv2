@@ -2,6 +2,7 @@ export interface Manifest {
 	name: string;
 	description: string;
 	authors: Author[];
+	required?: boolean;
 }
 
 export interface Author {

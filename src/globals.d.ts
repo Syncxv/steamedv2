@@ -1,10 +1,12 @@
 import { FriendsUIApp } from "./webpack/common/types/misc/friendsUiApp";
 import { PopupManager } from "./webpack/common/types/misc/popup";
+import { TSteamClient } from "./webpack/common/types/misc/SteamClient";
 
 declare global {
 	export var Steamed: typeof import("./Steamed");
 	export var g_PopupManager: PopupManager;
 	export var g_FriendsUIApp: FriendsUIApp;
+	export var SteamClient: TSteamClient;
 	interface Window {
 		webpackChunksteamui: {
 			push(chunk: any): any;
