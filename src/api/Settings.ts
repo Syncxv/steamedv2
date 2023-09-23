@@ -22,9 +22,9 @@ try {
 	var settings: Settings = JSON.parse(str ?? "");
 	mergeDefaults(settings, DefaultSettings);
 
-	console.log("settings = ", settings);
+	// logger.log("settings = ", settings);
 } catch (err) {
-	console.error("welp");
+	logger.log(err, "welp");
 	var settings: Settings = mergeDefaults({} as Settings, DefaultSettings);
 }
 
@@ -129,7 +129,7 @@ function makeProxy(settings: any, root = settings, path = ""): Settings {
  * settings for which you specified a default value may be uninitialised. If you need proper
  * handling for default values, use {@link Settings}
  */
-export const PlainSettings = DefaultSettings;
+export const PlainSettings = settings;
 
 /**
  * A smart settings object. Altering props automagically saves
