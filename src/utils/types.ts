@@ -3,6 +3,7 @@ export interface Manifest {
 	description: string;
 	authors: Author[];
 	required?: boolean;
+	enabledByDefault?: boolean;
 }
 
 export interface Author {

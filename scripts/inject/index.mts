@@ -42,15 +42,6 @@ async function main() {
 
 	let steamedContents = await fs.readFile("dist/main.js", "utf-8");
 
-	const settings = await getSettings(steamPath);
-	if (settings) {
-		steamedContents =
-			`window.settingsString = \`${JSON.stringify(settings)}\`\n\n` +
-			steamedContents;
-	}
-
-	// console.log(steamedContents);
-
 	await fs.writeFile(`${steamPath}/steamui/steamed.js`, steamedContents, {
 		encoding: "utf-8",
 	});

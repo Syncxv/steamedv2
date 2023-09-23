@@ -206,3 +206,24 @@ export function findByCode(...code: string[]) {
 export function findByCodeLazy(...code: string[]) {
 	return findLazy(filters.byCode(...code));
 }
+
+/**
+ * Wait for a module that matches the provided filter to be registered,
+ * then call the callback with the module as the first argument
+ */
+export function waitFor(
+	filter: string | string[] | FilterFn,
+	callback: CallbackFn
+) {
+	if (typeof filter === "string") filter = filters.byProps(filter);
+	else if (Array.isArray(filter)) filter = filters.byProps(...filter);
+	else if (typeof filter !== "function")
+		throw new Error(
+			"filter must be a string, string[] or function, got " + typeof filter
+		);
+
+	const [existing, id] = find(filter!, true, true);
+	if (existing) return void callback(existing, id);
+
+	subscriptions.set(filter, callback);
+}

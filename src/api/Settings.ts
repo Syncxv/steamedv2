@@ -62,7 +62,9 @@ function makeProxy(settings: any, root = settings, path = ""): Settings {
 					return (target[p] = makeProxy(
 						{
 							enabled:
-								plugins[p].required ?? plugins[p].enabledByDefault ?? false,
+								plugins[p].manifest.required ??
+								plugins[p].manifest.enabledByDefault ??
+								false,
 						},
 						root,
 						`plugins.${p}`
