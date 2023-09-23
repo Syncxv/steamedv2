@@ -2,6 +2,10 @@ import esbuild from "esbuild";
 import URL from "node:url";
 import { commonOpts, globPlugins, watch } from "./common.mjs";
 
+const defines = {
+	IS_DEV: JSON.stringify(watch),
+};
+
 export async function build() {
 	return new Promise(async (res) => {
 		const contexts = await Promise.all([
@@ -9,6 +13,9 @@ export async function build() {
 				...commonOpts,
 				entryPoints: ["src/index.ts"],
 				outfile: "dist/main.js",
+				define: {
+					...defines,
+				},
 			}),
 		]);
 

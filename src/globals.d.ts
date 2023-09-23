@@ -7,6 +7,8 @@ declare global {
 	export var g_PopupManager: PopupManager;
 	export var g_FriendsUIApp: FriendsUIApp;
 	export var SteamClient: TSteamClient;
+
+	export var IS_DEV: boolean;
 	interface Window {
 		webpackChunksteamui: {
 			push(chunk: any): any;

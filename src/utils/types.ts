@@ -13,13 +13,14 @@ export interface Author {
 export interface Patch {
 	find: string;
 	predicate?: () => boolean;
-	replacement: Replacement[] | Replacement;
+	replacement: PatchReplacement[] | PatchReplacement;
 	plugin?: string;
+	noWarn?: boolean;
 }
 
 export type ReplaceFn = (match: string, ...groups: string[]) => string;
 
-export interface Replacement {
+export interface PatchReplacement {
 	match: string | RegExp;
 	replace: string | ReplaceFn;
 	predicate?(): boolean;
