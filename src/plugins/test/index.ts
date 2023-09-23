@@ -20,7 +20,7 @@ export const patches: Patch[] = [
 		find: "SteamApp Init - Before Login",
 		replacement: {
 			match: /SteamApp Init - Before Login/,
-			replace: '$& WOAH"',
+			replace: "$& WOAH",
 		},
 	},
 ];
