@@ -6,7 +6,7 @@ import Plugins from "~plugins";
 const logger = new Logger("PluginManager", "#a6d189");
 
 export const plugins = Plugins;
-export const pluginArr = Object.values(plugins);
+export const pluginArr = Object.values(Plugins);
 
 export const patches: Patch[] = [];
 

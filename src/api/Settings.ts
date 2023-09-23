@@ -17,21 +17,15 @@ export interface Settings {
 // ill add some when we need it
 const DefaultSettings: Settings = { plugins: {} };
 
-// try {
-// 	const str = window.settingsString;
-// 	var settings: Settings = JSON.parse(str);
-// 	mergeDefaults(settings, DefaultSettings);
+try {
+	const str = localStorage.getItem("steamed_settings");
+	var settings: Settings = JSON.parse(str ?? "");
+	mergeDefaults(settings, DefaultSettings);
 
-// 	console.log("settings = ", settings);
-// } catch (err) {
-// 	console.error("welp");
-// 	var settings: Settings = mergeDefaults({} as Settings, DefaultSettings);
-// }
-
-export async function init() {
-	const settings = getSettings();
-
-	Settings = makeProxy(settings);
+	console.log("settings = ", settings);
+} catch (err) {
+	console.error("welp");
+	var settings: Settings = mergeDefaults({} as Settings, DefaultSettings);
 }
 
 export async function getSettings() {
@@ -46,6 +40,7 @@ export async function getSettings() {
 
 export async function setSettings(settins: string) {
 	await SteamClient.MachineStorage.SetString("steamed_settings", settins);
+	localStorage.setItem("steamed_settings", settins);
 }
 
 type SubscriptionCallback = ((newValue: any, path: string) => void) & {
@@ -141,4 +136,4 @@ export const PlainSettings = DefaultSettings;
  * the updated settings to disk.
  * This recursively proxies objects. If you need the object non proxied, use {@link PlainSettings}
  */
-export let Settings: Settings;
+export let Settings: Settings = makeProxy(settings);
