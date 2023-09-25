@@ -1,5 +1,5 @@
 import { Devs } from "@utils/constants";
-import { Manifest, Patch } from "@utils/types";
+import { Manifest, PluginPatch } from "@utils/types";
 
 export const manifest: Manifest = {
 	name: "Test",
@@ -15,7 +15,7 @@ export const stop = () => {
 	console.log("test stopped");
 };
 
-export const patches: Patch[] = [
+export const patches: PluginPatch[] = [
 	{
 		find: "SteamApp Init - Before Login",
 		replacement: {

@@ -37,11 +37,13 @@ export const globPlugins: Plugin = {
 					if (file === "index.ts") continue;
 
 					const mod = `p${i}`;
+					const plugin = `plugin${i}`;
 					code += `import * as ${mod} from "./${dir}/${file.replace(
 						/\.tsx?$/,
 						""
 					)}";\n`;
-					plugins += `[${mod}.manifest.name]:${mod},\n`;
+					code += `const ${plugin} = ${mod}.plugin || ${mod}.default || ${mod};\n`;
+					plugins += `[${plugin}.manifest.name]:${plugin},\n`;
 					i++;
 				}
 			}
@@ -61,4 +63,5 @@ export const commonOpts: BuildOptions = {
 	minify: !watch,
 	sourcemap: watch ? "inline" : undefined,
 	plugins: [globPlugins],
+	logOverride: { "import-is-undefined": "silent" },
 };

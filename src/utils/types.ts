@@ -1,3 +1,5 @@
+import React from "react";
+import { patches } from "../plugins/test/index";
 export interface Manifest {
 	name: string;
 	description: string;
@@ -15,9 +17,11 @@ export interface Patch {
 	find: string;
 	predicate?: () => boolean;
 	replacement: PatchReplacement[] | PatchReplacement;
-	plugin?: string;
+	plugin: string;
 	noWarn?: boolean;
 }
+
+export type PluginPatch = Omit<Patch, "plugin">;
 
 export type ReplaceFn = (match: string, ...groups: string[]) => string;
 
@@ -27,8 +31,22 @@ export interface PatchReplacement {
 	predicate?(): boolean;
 }
 
-export interface Plugin {
+export interface PluginDef {
 	manifest: Manifest;
-	patches: Patch[];
+	patches?: PluginPatch[];
+	start?: () => void;
+	stop?: () => void;
 	[key: string]: any;
+}
+
+export interface Plugin extends PluginDef {
+	patches: Patch[];
+}
+
+export interface SettingsItem {
+	visible: boolean;
+	title: string;
+	icon: React.ReactElement | (() => JSX.Element);
+	route: string;
+	content: React.ReactElement | (() => JSX.Element);
 }
