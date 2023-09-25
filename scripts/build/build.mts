@@ -33,8 +33,10 @@ const __filename = URL.fileURLToPath(import.meta.url);
 // const __dirname = dirname(__filename);
 if (process.argv[1] === __filename) {
 	console.log(
-		"Main Building and inserting steamed to",
-		insertToSteam + "/steamui/steamed.js"
+		"Main Building",
+		insertToSteam
+			? ` and inserting steamed to ${insertToSteam}/steamui/steamed.js`
+			: ""
 	);
 	build();
 }
