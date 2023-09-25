@@ -1,3 +1,6 @@
+import { React } from "@webpack/common";
+import { SettingsItem } from "./types";
+
 /**
  * Recursively merges defaults into an object and returns the same object
  * @param obj Object
@@ -32,4 +35,12 @@ export function generateUuid(prefix = "", suffix = "") {
 export const waitForCondition = (condition: () => any, cb: () => void) => {
 	if (condition()) return cb();
 	return requestAnimationFrame(() => waitForCondition(condition, cb));
+};
+
+export const transformSettings = (setting: SettingsItem) => {
+	if (typeof setting.content === "function")
+		setting.content = <setting.content />;
+	if (typeof setting.icon === "function") setting.icon = <setting.icon />;
+	setting.route = `/settings/${setting.title.toLowerCase()}`;
+	return setting;
 };

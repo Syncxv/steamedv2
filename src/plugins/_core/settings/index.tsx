@@ -1,4 +1,5 @@
 import { Devs } from "@utils/constants";
+import { transformSettings } from "@utils/misc";
 import { PluginDef, SettingsItem } from "@utils/types";
 
 export const plugin: PluginDef = {
@@ -11,31 +12,43 @@ export const plugin: PluginDef = {
 	},
 	patches: [
 		{
-			find: "#Settings_Page_Internal",
-			replacement: {
-				match: /Internal:{visible:/,
-				replace: "...$self?.getSettingsObjects(),$&",
-			},
+			find: "#Settings_Page_General",
+			replacement: [
+				{
+					match: /General:{visible:/,
+					replace: "...$self?.getSettingsObjects(),$&",
+				},
+
+				{
+					match:
+						/((\i\.PagedSettingsSeparator).{1,200}const \i=function\(\){.{1,200}return)(.{1,100}:.\i)}/,
+					replace: "$1[...$3, $2, ...$self.getSettingsStrings() ]}",
+				},
+				{
+					match: /Internal:{visible:(\i&&\i)/,
+					replace: "$&true",
+				},
+			],
 		},
 	],
 
 	getSettingsObjects(): Record<string, SettingsItem> {
-		return {
-			SteamedGeneral: {
+		if (this.settingStuffs) return this.settingStuffs;
+
+		return (this.settingsStuffs = {
+			SteamedGeneral: transformSettings({
 				visible: true,
-				icon: () => {
-					return <div></div>;
-				},
+				icon: () => <div>:|</div>,
 				content: () => {
-					return <div>hi</div>;
+					return <div>WOAH</div>;
 				},
 				route: "/settings/hehe",
-				title: "General",
-			},
-		};
+				title: "Steamed Settings",
+			}),
+		});
 	},
 
 	getSettingsStrings() {
-		return ["SteamedGeneral"];
+		return Object.keys(this.getSettingsObjects());
 	},
 };

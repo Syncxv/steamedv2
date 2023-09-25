@@ -12,5 +12,6 @@ export let ReactDOM: typeof import("react-dom") &
 
 waitFor("useState", (m) => {
 	React = m;
+	window.React = m;
 	({ useEffect, useState, useMemo, useRef, useCallback } = React);
 });

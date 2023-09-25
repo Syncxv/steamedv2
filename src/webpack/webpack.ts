@@ -121,19 +121,19 @@ Object.defineProperty(Function.prototype, "t", {
 
 export const filters = {
 	byProps:
-		(...props): FilterFn =>
+		(...props: string[]): FilterFn =>
 		(m) =>
 			props.every((p) => m[p] !== void 0),
 	byDisplayName:
-		(displayName): FilterFn =>
+		(displayName: string): FilterFn =>
 		(m) =>
 			m.displayName === displayName,
 	byName:
-		(name): FilterFn =>
+		(name: string): FilterFn =>
 		(m) =>
 			m.name === name,
 	byCode:
-		(...codes): FilterFn =>
+		(...codes: RegExp[] | string[]): FilterFn =>
 		(m) => {
 			if (typeof m !== "function") return false;
 			const code = Function.prototype.toString.call(m);

@@ -15,8 +15,7 @@ export const plugin: PluginDef = {
 			replacement: [
 				{
 					match: /(OnSubmit\(e\){.{1,50},)(this\.props\.chatView)/,
-					replace:
-						"async $1\nconsole.log(e, this, this.state);await Steamed.Api.Commands.processCommand(this);\n$2",
+					replace: "async $1await Steamed.Api.Commands.processCommand(this);$2",
 				},
 				{
 					match: /(.{1,2}\.bAvailableInChina.{1,25})return (.{1,2})\}/,
