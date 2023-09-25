@@ -38,8 +38,6 @@ function patchPush() {
 			const { subscriptions, listeners } = Steamed.Webpack;
 			const { patches } = Steamed.Plugins;
 
-			console.log(modules, patches);
-
 			for (const id in modules) {
 				let mod = modules[id];
 

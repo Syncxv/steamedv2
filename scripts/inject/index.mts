@@ -35,29 +35,48 @@ async function main() {
 
 	if (!existsSync("dist/main.js")) await build();
 
-	const sharedJsContextHTML = await fs.readFile(
-		`${steamPath}/steamui/index.html`,
-		"utf-8"
-	);
-
 	let steamedContents = await fs.readFile("dist/main.js", "utf-8");
 
 	await fs.writeFile(`${steamPath}/steamui/steamed.js`, steamedContents, {
 		encoding: "utf-8",
 	});
 
-	GlobalRegistrator.register();
-	document.documentElement.innerHTML = sharedJsContextHTML;
-	const toSwap = document.head.querySelector('[src^="/libraries/"]');
-	document.head.insertBefore(toSwap!, toSwap!.previousElementSibling);
+	const sharedJsContextHTML = await fs.readFile(
+		`${steamPath}/steamui/index.html`,
+		"utf-8"
+	);
 
-	if (!document.head.querySelector('script[src="./steamed.js"]'))
-		document.head.prepend(html`<script src="./steamed.js"></script>`);
+	modifyHTML(sharedJsContextHTML);
+
 	await fs.writeFile(
 		`${steamPath}/steamui/index.html`,
 		document.documentElement.innerHTML,
 		"utf-8"
 	);
+}
+
+function modifyHTML(sharedJsContextHTML: string) {
+	GlobalRegistrator.register();
+	document.documentElement.innerHTML = sharedJsContextHTML;
+
+	if (!document.head.querySelector('script[src="./steamed.js"]'))
+		document.head.prepend(html`<script src="./steamed.js"></script>`);
+
+	// we want library.js to be first since that has webpack in it.
+	// why? because when we patch webpack we want all the modules but webpack hasnt been initialized since
+	// library.js executes 2nd. so there are like 50 modules in the webpack chunk before the push is even defined.
+	// so we miss a lot of modules
+	const toSwap = document.head.querySelector('[src^="/library.js"]');
+	const prevSibling = toSwap?.previousElementSibling;
+	if (
+		!toSwap ||
+		!prevSibling ||
+		prevSibling.tagName !== "SCRIPT" ||
+		!(prevSibling as HTMLScriptElement).src.includes("/libraries")
+	)
+		return;
+
+	document.head.insertBefore(toSwap, toSwap.previousElementSibling);
 }
 
 main();
