@@ -4,7 +4,10 @@ import { proxyLazy } from "@utils/lazy";
 import { WebpackInstance } from "@webpack/types";
 
 export let wreq: WebpackInstance;
-export let cache: WebpackInstance["c"];
+export let _cache: WebpackInstance["c"];
+export let _cache2: WebpackInstance["c2"];
+
+export let cache;
 
 export type FilterFn = (mod: any) => boolean;
 export type CallbackFn = (mod: any, id: number) => void;
@@ -47,7 +50,7 @@ Object.defineProperty(Function.prototype, "m", {
 		) {
 			wreq = this;
 			wreq.c ??= extractPrivateCache(wreq);
-			cache = wreq.c;
+			_cache = wreq.c;
 
 			// debugger;
 			delete (Function.prototype as any).m;
@@ -55,6 +58,57 @@ Object.defineProperty(Function.prototype, "m", {
 		} else {
 			// huh not webpack_require
 			Object.defineProperty(this, "m", {
+				value: v,
+				configurable: true,
+				writable: true,
+				enumerable: true,
+			});
+		}
+	},
+	configurable: true,
+});
+
+// for some reason there are 2 webpacks. like 2 requires and 2 caches.
+// now i have to keep track of both :|
+Object.defineProperty(Function.prototype, "t", {
+	set(v) {
+		if (v && v.toString && v.toString().includes("__esModule") && !this.amdO) {
+			console.log(":O", v, this);
+
+			wreq.c2 ??= extractPrivateCache(this);
+			_cache2 = wreq.c2;
+
+			cache = new Proxy(
+				{ _cache, _cache2 },
+				{
+					get(_, key) {
+						return _cache[key] || _cache2[key];
+					},
+
+					// for loop stuff
+					ownKeys(target) {
+						const keys1 = Reflect.ownKeys(target._cache);
+						const keys2 = Reflect.ownKeys(target._cache2);
+
+						// Combine the keys, giving priority to keys in _cache
+						const uniqueKeys = new Set([...keys2, ...keys1]);
+						return Array.from(uniqueKeys);
+					},
+					getOwnPropertyDescriptor(target, key) {
+						let desc = Reflect.getOwnPropertyDescriptor(target._cache, key);
+						if (!desc) {
+							desc = Reflect.getOwnPropertyDescriptor(target._cache2, key);
+						}
+						if (desc) desc.enumerable = true;
+						return desc;
+					},
+				}
+			);
+
+			delete (Function.prototype as any).t;
+			this.t = v;
+		} else {
+			Object.defineProperty(this, "t", {
 				value: v,
 				configurable: true,
 				writable: true,

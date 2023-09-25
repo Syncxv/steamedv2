@@ -1,5 +1,4 @@
 import React from "react";
-import { patches } from "../plugins/test/index";
 export interface Manifest {
 	name: string;
 	description: string;
@@ -36,6 +35,7 @@ export interface PluginDef {
 	patches?: PluginPatch[];
 	start?: () => void;
 	stop?: () => void;
+	commands?: Command[];
 	[key: string]: any;
 }
 
@@ -49,4 +49,17 @@ export interface SettingsItem {
 	icon: React.ReactElement | (() => JSX.Element);
 	route: string;
 	content: React.ReactElement | (() => JSX.Element);
+}
+
+export interface CommandReturn {
+	result: string;
+	send?: boolean;
+}
+export interface Command {
+	name: string;
+	description: string;
+	execute: (
+		args: string[],
+		thisObj: any
+	) => Promise<CommandReturn | void> | CommandReturn | void;
 }

@@ -2,6 +2,7 @@ import { Settings } from "@api/Settings";
 import { Logger } from "@utils/Logger";
 import { Patch } from "@utils/types";
 import Plugins from "~plugins";
+import { Commands } from "@api/index";
 
 const logger = new Logger("PluginManager", "#a6d189");
 
@@ -47,6 +48,18 @@ export function startAllPlugins() {
 				} catch (e) {
 					logger.error(`Failed to start ${name}\n`, e);
 					return false;
+				}
+			}
+
+			if (p.commands?.length) {
+				console.info("Registering commands of plugin", p.name);
+				for (const cmd of p.commands) {
+					try {
+						Commands.registerCommand(cmd);
+					} catch (e) {
+						console.error(`Failed to register command ${cmd.name}\n`, e);
+						return false;
+					}
 				}
 			}
 		}

@@ -15,6 +15,7 @@ export interface WebpackInstance {
 			exports: any;
 		};
 	};
+	c2: this["c"];
 	d: Function;
 	/**
 	 * Loads chunks by their ID.

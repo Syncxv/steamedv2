@@ -1,4 +1,4 @@
-import { Command } from "@src/types";
+import { Command } from "@utils/types";
 import { i18n, MessageClass } from "@webpack/common";
 
 export const commands: { [key: string]: Command } = {};
@@ -8,17 +8,19 @@ export const find = (cb: (c: Command) => boolean) =>
 
 export const registerCommand = (cmd: Command) => {
 	if (commands[cmd.name]) throw Error(`Name ${cmd.name} already exists boy`);
-	i18n.m_mapTokens.set(
+	i18n.LocalizationManager.m_mapTokens.set(
 		`SteamedSlashCommandDescription_${cmd.name}`,
 		cmd.description
 	);
 	commands[cmd.name] = cmd;
 };
 export const unRegisterCommand = (name: string) => {
-	let value;
+	let value: boolean;
 	commands[name]
 		? (delete commands[name],
-		  i18n.m_mapTokens.delete(`SteamedSlashCommandDescription_${name}`),
+		  i18n.LocalizationManager.m_mapTokens.delete(
+				`SteamedSlashCommandDescription_${name}`
+		  ),
 		  (value = true))
 		: (value = false);
 	return value;
@@ -33,7 +35,7 @@ export const processCommand = async (thisObj: any) => {
 	const command = find((c) => c.name.toLowerCase().includes(cmd.toLowerCase()));
 	if (!command) return;
 
-	let result;
+	let result: any;
 
 	try {
 		result = await command.execute(cmdArgs, this);

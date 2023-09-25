@@ -10,6 +10,11 @@ import { startAllPlugins } from "./plugins";
 import { waitForCondition } from "./utils";
 
 export async function init(cb: () => void) {
-	startAllPlugins();
-	waitForCondition(() => window?.g_FriendsUIApp?.ready_to_render, cb);
+	waitForCondition(
+		() => window?.g_FriendsUIApp?.ready_to_render,
+		() => {
+			startAllPlugins();
+			cb();
+		}
+	);
 }
