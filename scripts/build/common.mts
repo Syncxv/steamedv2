@@ -2,8 +2,13 @@ import { Plugin } from "esbuild";
 import { BuildOptions } from "esbuild";
 import { existsSync } from "fs";
 import { readdir } from "fs/promises";
+import { getDefaultSteamPath } from "../inject/util/steamPath.mjs";
+import { insertSteamed } from "../inject/index.mjs";
 
 export const watch = process.argv.includes("--watch");
+export const insertToSteam =
+	process.argv.find((m) => m.startsWith("--insert="))?.split("=")[1] ??
+	/* default */ (process.argv.includes("--insert") && getDefaultSteamPath());
 
 export const globPlugins: Plugin = {
 	name: "globPlugins",
@@ -57,11 +62,22 @@ export const globPlugins: Plugin = {
 	},
 };
 
+export const insertSteamedPlugin: Plugin = {
+	name: "insertSteamed",
+	setup(build) {
+		build.onEnd((res) => {
+			if (res.errors.length || !insertToSteam) return;
+
+			insertSteamed(insertToSteam);
+		});
+	},
+};
+
 export const commonOpts: BuildOptions = {
 	logLevel: "info",
 	bundle: true,
 	minify: !watch,
 	sourcemap: watch ? "inline" : undefined,
-	plugins: [globPlugins],
+	plugins: [globPlugins, insertSteamedPlugin],
 	logOverride: { "import-is-undefined": "silent" },
 };

@@ -14,14 +14,14 @@ export const plugin: PluginDef = {
 			find: "#Settings_Page_Internal",
 			replacement: {
 				match: /Internal:{visible:/,
-				replace: "...(console.log($self), []),$&",
+				replace: "...$self?.getSettingsObjects(),$&",
 			},
 		},
 	],
 
-	getSettingsStuff(): SettingsItem[] {
-		return [
-			{
+	getSettingsObjects(): Record<string, SettingsItem> {
+		return {
+			SteamedGeneral: {
 				visible: true,
 				icon: () => {
 					return <div></div>;
@@ -30,8 +30,12 @@ export const plugin: PluginDef = {
 					return <div>hi</div>;
 				},
 				route: "/settings/hehe",
-				title: "HI",
+				title: "General",
 			},
-		];
+		};
+	},
+
+	getSettingsStrings() {
+		return ["SteamedGeneral"];
 	},
 };

@@ -1,6 +1,6 @@
 import esbuild from "esbuild";
 import URL from "node:url";
-import { commonOpts, globPlugins, watch } from "./common.mjs";
+import { commonOpts, globPlugins, insertToSteam, watch } from "./common.mjs";
 
 const defines = {
 	IS_DEV: JSON.stringify(watch),
@@ -32,6 +32,9 @@ export async function build() {
 const __filename = URL.fileURLToPath(import.meta.url);
 // const __dirname = dirname(__filename);
 if (process.argv[1] === __filename) {
-	console.log("Main Building");
+	console.log(
+		"Main Building and inserting steamed to",
+		insertToSteam + "/steamui/steamed.js"
+	);
 	build();
 }

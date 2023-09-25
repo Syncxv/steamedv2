@@ -2,21 +2,13 @@ import { GlobalRegistrator } from "@happy-dom/global-registrator";
 
 import { existsSync } from "node:fs";
 import fs from "node:fs/promises";
-import { isWsl } from "./util/isWsl.mjs";
 import { build } from "../build/build.mjs";
-import { isValidSteamPath } from "./util/isValidSteamPath.mjs";
-import { getSettings } from "./util/getSettings.mjs";
+import { getDefaultSteamPath, isValidSteamPath } from "./util/steamPath.mjs";
 
-const wsl = isWsl();
 const args = process.argv.slice(2);
 
 //TODO: test on windows
-const steamPath =
-	args.length > 0
-		? args[0]
-		: wsl
-		? "/mnt/c/Program Files (x86)/Steam"
-		: "C:/Program Files (x86)/Steam";
+const steamPath = args.length > 0 ? args[0] : getDefaultSteamPath();
 
 function html(strings: TemplateStringsArray, ...values: string[]) {
 	const content = strings.reduce((accumulator, currentString, i) => {
@@ -35,11 +27,7 @@ async function main() {
 
 	if (!existsSync("dist/main.js")) await build();
 
-	let steamedContents = await fs.readFile("dist/main.js", "utf-8");
-
-	await fs.writeFile(`${steamPath}/steamui/steamed.js`, steamedContents, {
-		encoding: "utf-8",
-	});
+	await insertSteamed(steamPath);
 
 	const sharedJsContextHTML = await fs.readFile(
 		`${steamPath}/steamui/index.html`,
@@ -55,7 +43,15 @@ async function main() {
 	);
 }
 
-function modifyHTML(sharedJsContextHTML: string) {
+export async function insertSteamed(steamPath: string) {
+	let steamedContents = await fs.readFile("dist/main.js", "utf-8");
+
+	await fs.writeFile(`${steamPath}/steamui/steamed.js`, steamedContents, {
+		encoding: "utf-8",
+	});
+}
+
+export function modifyHTML(sharedJsContextHTML: string) {
 	GlobalRegistrator.register();
 	document.documentElement.innerHTML = sharedJsContextHTML;
 
