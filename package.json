@@ -1,24 +1,32 @@
 {
-	"name": "steamedv2",
-	"version": "1.0.0",
-	"description": "",
-	"main": "index.js",
-	"scripts": {
-		"build": "tsx scripts/build/build.mts",
-		"inject": "tsx scripts/inject/index.mts"
-	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
-	"devDependencies": {
-		"@happy-dom/global-registrator": "^12.1.5",
-		"@types/node": "^20.6.3",
-		"@types/react": "^18.2.22",
-		"@types/react-dom": "^18.2.7",
-		"diff": "^5.1.0",
-		"esbuild": "^0.19.3",
-		"mobx": "^5.0.0",
-		"tsx": "^3.12.10",
-		"vdf-parser": "^1.2.1"
-	}
+    "name": "steamedv2",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "build": "tsx scripts/build/build.mts",
+        "inject": "tsx scripts/inject/index.mts",
+        "lint": "eslint . --ext .js,.jsx,.ts,.tsx --ignore-pattern src/userplugins"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@happy-dom/global-registrator": "^12.1.5",
+        "@types/node": "^20.6.3",
+        "@types/react": "^18.2.22",
+        "@types/react-dom": "^18.2.7",
+        "@typescript-eslint/eslint-plugin": "^6.7.3",
+        "@typescript-eslint/parser": "^6.7.3",
+        "diff": "^5.1.0",
+        "esbuild": "^0.19.3",
+        "eslint": "^8.46.0",
+        "eslint-import-resolver-alias": "^1.1.2",
+        "eslint-plugin-path-alias": "^1.0.0",
+        "eslint-plugin-simple-import-sort": "^10.0.0",
+        "eslint-plugin-unused-imports": "^2.0.0",
+        "mobx": "^5.0.0",
+        "tsx": "^3.12.10",
+        "vdf-parser": "^1.2.1"
+    }
 }

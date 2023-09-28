@@ -1,0 +1,52 @@
+{
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "ignorePatterns": ["dist", "browser"],
+    "plugins": [
+        "@typescript-eslint",
+        "simple-import-sort",
+        "unused-imports",
+        "path-alias"
+    ],
+    "settings": {
+        "import/resolver": {
+            "alias": {
+                "map": [
+                    ["@webpack", "./src/webpack"],
+                    ["@webpack/common", "./src/webpack/common"],
+                    ["@utils", "./src/utils"],
+                    ["@api", "./src/api"],
+                    ["@components", "./src/components"]
+                ]
+            }
+        }
+    },
+
+    "rules": {
+        "simple-import-sort/imports": "error",
+        "simple-import-sort/exports": "error",
+
+        "no-loss-of-precision": "error",
+        "no-misleading-character-class": "error",
+        "no-prototype-builtins": "error",
+        "no-regex-spaces": "error",
+        "no-shadow-restricted-names": "error",
+        "no-unexpected-multiline": "error",
+        "no-unsafe-optional-chaining": "error",
+        "no-useless-backreference": "error",
+        "use-isnan": "error",
+        "prefer-const": "error",
+        "prefer-spread": "error",
+        "spaced-comment": ["error", "always", { "markers": ["!"] }],
+        "yoda": "error",
+        "prefer-destructuring": ["error", { "object": true, "array": false }],
+        "operator-assignment": ["error", "always"],
+        "no-useless-computed-key": "error",
+        "no-unneeded-ternary": ["error", { "defaultAssignment": false }],
+        "no-invalid-regexp": "error",
+        "no-constant-condition": ["error", { "checkLoops": false }],
+        "no-duplicate-imports": "error",
+        "no-extra-semi": "error",
+        "dot-notation": "error"
+    }
+}

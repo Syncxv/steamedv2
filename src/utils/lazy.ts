@@ -17,16 +17,16 @@
  */
 
 export function makeLazy<T>(factory: () => T, attempts = 5): () => T {
-	let tries = 0;
-	let cache: T;
-	return () => {
-		if (!cache && attempts > tries++) {
-			cache = factory();
-			if (!cache && attempts === tries)
-				console.error("Lazy factory failed:", factory);
-		}
-		return cache;
-	};
+    let tries = 0;
+    let cache: T;
+    return () => {
+        if (!cache && attempts > tries++) {
+            cache = factory();
+            if (!cache && attempts === tries)
+                console.error("Lazy factory failed:", factory);
+        }
+        return cache;
+    };
 }
 
 // Proxies demand that these properties be unmodified, so proxyLazy
@@ -39,41 +39,41 @@ const kGET = Symbol.for("steamed.lazy.get");
 const kCACHE = Symbol.for("steamed.lazy.cached");
 
 for (const method of [
-	"apply",
-	"construct",
-	"defineProperty",
-	"deleteProperty",
-	"get",
-	"getOwnPropertyDescriptor",
-	"getPrototypeOf",
-	"has",
-	"isExtensible",
-	"ownKeys",
-	"preventExtensions",
-	"set",
-	"setPrototypeOf",
+    "apply",
+    "construct",
+    "defineProperty",
+    "deleteProperty",
+    "get",
+    "getOwnPropertyDescriptor",
+    "getPrototypeOf",
+    "has",
+    "isExtensible",
+    "ownKeys",
+    "preventExtensions",
+    "set",
+    "setPrototypeOf",
 ]) {
-	handler[method] = (target: any, ...args: any[]) =>
-		Reflect[method](target[kGET](), ...args);
+    handler[method] = (target: any, ...args: any[]) =>
+        Reflect[method](target[kGET](), ...args);
 }
 
 handler.ownKeys = (target) => {
-	const v = target[kGET]();
-	const keys = Reflect.ownKeys(v);
-	for (const key of unconfigurable) {
-		if (!keys.includes(key)) keys.push(key);
-	}
-	return keys;
+    const v = target[kGET]();
+    const keys = Reflect.ownKeys(v);
+    for (const key of unconfigurable) {
+        if (!keys.includes(key)) keys.push(key);
+    }
+    return keys;
 };
 
 handler.getOwnPropertyDescriptor = (target, p) => {
-	if (typeof p === "string" && unconfigurable.includes(p))
-		return Reflect.getOwnPropertyDescriptor(target, p);
+    if (typeof p === "string" && unconfigurable.includes(p))
+        return Reflect.getOwnPropertyDescriptor(target, p);
 
-	const descriptor = Reflect.getOwnPropertyDescriptor(target[kGET](), p);
+    const descriptor = Reflect.getOwnPropertyDescriptor(target[kGET](), p);
 
-	if (descriptor) Object.defineProperty(target, p, descriptor);
-	return descriptor;
+    if (descriptor) Object.defineProperty(target, p, descriptor);
+    return descriptor;
 };
 
 /**
@@ -87,18 +87,18 @@ handler.getOwnPropertyDescriptor = (target, p) => {
  * @example const mod = proxyLazy(() => findByProps("blah")); console.log(mod.blah);
  */
 export function proxyLazy<T>(factory: () => T, attempts = 5): T {
-	let tries = 0;
-	const proxyDummy = Object.assign(function () {}, {
-		[kCACHE]: void 0 as T | undefined,
-		[kGET]() {
-			if (!proxyDummy[kCACHE] && attempts > tries++) {
-				proxyDummy[kCACHE] = factory();
-				if (!proxyDummy[kCACHE] && attempts === tries)
-					console.error("Lazy factory failed:", factory);
-			}
-			return proxyDummy[kCACHE];
-		},
-	});
+    let tries = 0;
+    const proxyDummy = Object.assign(function () {}, {
+        [kCACHE]: void 0 as T | undefined,
+        [kGET]() {
+            if (!proxyDummy[kCACHE] && attempts > tries++) {
+                proxyDummy[kCACHE] = factory();
+                if (!proxyDummy[kCACHE] && attempts === tries)
+                    console.error("Lazy factory failed:", factory);
+            }
+            return proxyDummy[kCACHE];
+        },
+    });
 
-	return new Proxy(proxyDummy, handler) as any;
+    return new Proxy(proxyDummy, handler) as any;
 }
