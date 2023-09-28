@@ -24,8 +24,8 @@ export const plugin: PluginDef = {
                     replace: "$1[...$3, $2, ...$self.getSettingsStrings() ]}",
                 },
                 {
-                    match: /Internal:{visible:(\i&&\i)/,
-                    replace: "$&true",
+                    match: /(Internal:{visible:)(\i&&\i)/,
+                    replace: "$1true",
                 },
             ],
         },
@@ -48,6 +48,6 @@ export const plugin: PluginDef = {
     },
 
     getSettingsStrings() {
-        return Object.keys(this.getSettingsObjects());
+        return ["Internal", ...Object.keys(this.getSettingsObjects())];
     },
 };

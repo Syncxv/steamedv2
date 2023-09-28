@@ -28,7 +28,7 @@ export function generateUuid(prefix = "", suffix = "") {
             const r = (Math.random() * 16) | 0;
             const v = c === "x" ? r : (r & 0x3) | 0x8;
             return v.toString(16);
-        },
+        }
     );
     return prefix + uuid + suffix;
 }
@@ -45,4 +45,17 @@ export const transformSettings = (setting: SettingsItem) => {
     if (!setting.route)
         setting.route = `/settings/${setting.title.toLowerCase()}`;
     return setting;
+};
+
+export const createElement = (html: string) => {
+    const div = document.createElement("div");
+    div.innerHTML = html;
+    return div.firstChild!;
+};
+
+export const insertCss = (css: string, _document = window.document) => {
+    const id = Math.floor(Date.now() + Math.random() * 100000).toString();
+    const style = createElement(`<style id="${id}"> ${css} </style>`);
+    _document.head.appendChild(style);
+    return id;
 };

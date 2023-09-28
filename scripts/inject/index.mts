@@ -32,7 +32,7 @@ async function main() {
 
     const sharedJsContextHTML = await fs.readFile(
         `${steamPath}/steamui/index.html`,
-        "utf-8",
+        "utf-8"
     );
 
     modifyHTML(sharedJsContextHTML);
@@ -40,7 +40,7 @@ async function main() {
     await fs.writeFile(
         `${steamPath}/steamui/index.html`,
         document.documentElement.innerHTML,
-        "utf-8",
+        "utf-8"
     );
 }
 

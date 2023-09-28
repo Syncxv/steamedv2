@@ -19,7 +19,7 @@ export const plugin: PluginDef = {
                         "async $1await Steamed.Api.Commands.processCommand(this);$2",
                 },
                 {
-                    match: /(.{1,2}\.bAvailableInChina.{1,25})return (.{1,2})\}/,
+                    match: /(\i\.bAvailableInChina.{1,25})return (.{1,2})\}/,
                     replace: "$1return {...$self.getCommands(), ...$2}}",
                 },
             ],
