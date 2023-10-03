@@ -1,7 +1,8 @@
 import { Devs } from "@utils/constants";
-import { addPopupCreatedCallback } from "@utils/popup";
 import { insertCss } from "@utils/misc";
+import { addPopupCreatedCallback } from "@utils/popup";
 import { PluginDef } from "@utils/types";
+
 const css = `.chatEntry.Panel.Focusable::before {
     content: "steamed IS INJECTED :D";
     position: absolute;

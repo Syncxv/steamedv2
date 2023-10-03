@@ -1,7 +1,7 @@
-import { PluginDef } from "@utils/types";
-import { Devs } from "@utils/constants";
 import * as DataStore from "@api/DataStore";
+import { Devs } from "@utils/constants";
 import { waitForCondition } from "@utils/misc";
+import { PluginDef } from "@utils/types";
 
 import emojisJSON from "./emojis.json";
 
@@ -138,16 +138,16 @@ export const plugin: PluginDef = {
         const res =
             storedEmoji != null
                 ? {
-                      ...storedEmoji,
-                      last_used: Date.now(),
-                      use_count: storedEmoji.use_count + 1,
-                  }
+                    ...storedEmoji,
+                    last_used: Date.now(),
+                    use_count: storedEmoji.use_count + 1,
+                }
                 : {
-                      name: obj.slug,
-                      last_used: Date.now(),
-                      use_count: 1,
-                      is_steamed: true,
-                  };
+                    name: obj.slug,
+                    last_used: Date.now(),
+                    use_count: 1,
+                    is_steamed: true,
+                };
         await DataStore.set(emojiKey(obj.slug), res);
 
         const bru = g_FriendsUIApp.ChatStore.EmoticonStore.m_rgEmoticons.find(

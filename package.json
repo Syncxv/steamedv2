@@ -6,7 +6,7 @@
     "scripts": {
         "build": "tsx scripts/build/build.mts",
         "inject": "tsx scripts/inject/index.mts",
-        "lint": "eslint . --ext .js,.jsx,.ts,.tsx --ignore-pattern src/userplugins"
+        "lint": "eslint . --ext .js,.jsx,.ts,.tsx --ignore-pattern src/userplugins  --ignore-pattern test"
     },
     "keywords": [],
     "author": "",
