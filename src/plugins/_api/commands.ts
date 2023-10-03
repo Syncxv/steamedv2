@@ -14,7 +14,7 @@ export const plugin: PluginDef = {
             find: '"SlashCommand"',
             replacement: [
                 {
-                    match: /(OnSubmit\(e\){.{1,50},)(this\.props\.chatView)/,
+                    match: /(OnSubmit\(\i\){.{1,50},)(this\.props\.chatView)/,
                     replace:
                         "async $1await Steamed.Api.Commands.processCommand(this);$2",
                 },

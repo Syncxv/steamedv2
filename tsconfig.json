@@ -16,6 +16,7 @@
         "noImplicitAny": false,
         "target": "ESNEXT",
         "jsx": "preserve",
+        "resolveJsonModule": true,
 
         "baseUrl": "./src/",
         "paths": {

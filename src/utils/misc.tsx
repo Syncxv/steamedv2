@@ -57,5 +57,5 @@ export const insertCss = (css: string, _document = window.document) => {
     const id = Math.floor(Date.now() + Math.random() * 100000).toString();
     const style = createElement(`<style id="${id}"> ${css} </style>`);
     _document.head.appendChild(style);
-    return id;
+    return { doc: _document, id };
 };

@@ -41,7 +41,7 @@ export interface ChatStore {
         // TODO: type chat
         Parse_BuildReactComponents: (
             codeOpt: { type: number; text: string },
-            chat: any,
+            chat: any
         ) => React.ReactNode;
     };
     m_ChatRoomEffectSettings: {
@@ -89,6 +89,7 @@ interface Emoticon {
     last_used: number;
     use_count: number;
     appid: number;
+    is_steamed?: boolean;
 }
 interface Sticker {
     name: string;
