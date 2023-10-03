@@ -75,8 +75,8 @@ export const plugin: PluginDef = {
             g_FriendsUIApp.ChatStore.EmoticonStore.m_rgEmoticons.find(
                 (m) => m.name === name
             );
-        const reEmojis = emojis.find((m) => m.slug === name);
-        return reEmojis != null && rgEmoji?.is_steamed;
+        const reEmoji = emojis.find((m) => m.slug === name);
+        return reEmoji != null && rgEmoji?.is_steamed;
     },
 
     renderEmoji(name: string) {
