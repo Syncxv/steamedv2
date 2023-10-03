@@ -1,12 +1,12 @@
 import { FriendsUIApp } from "./webpack/common/types/misc/friendsUiApp";
 import { PopupManager } from "./webpack/common/types/misc/popup";
-import { TSteamClient } from "./webpack/common/types/misc/SteamClient";
+import { ISteamClient } from "./webpack/common/types/misc/SteamClient";
 
 declare global {
     export var Steamed: typeof import("./Steamed");
     export var g_PopupManager: PopupManager;
     export var g_FriendsUIApp: FriendsUIApp;
-    export var SteamClient: TSteamClient;
+    export var SteamClient: ISteamClient;
 
     export var IS_DEV: boolean;
     interface Window {
@@ -18,7 +18,7 @@ declare global {
     }
 }
 export interface WebpackArray {
-    push([[[id]], {}]: [
+    push([[[id]], { }]: [
         [[id: string]],
         {},
         (require: WebpackRequire) => void,
