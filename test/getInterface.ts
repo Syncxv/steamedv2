@@ -1,4 +1,3 @@
-
 function steamClientToInterface() {
     let res = "";
     for (const [key, value] of Object.entries((window as any).SteamClient)) {
