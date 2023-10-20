@@ -1,5 +1,7 @@
-import esbuild from "esbuild";
 import URL from "node:url";
+
+import esbuild from "esbuild";
+
 import { commonOpts, globPlugins, insertToSteam, watch } from "./common.mjs";
 
 const defines = {

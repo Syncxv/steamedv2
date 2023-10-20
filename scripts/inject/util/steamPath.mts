@@ -1,4 +1,5 @@
 import { existsSync } from "node:fs";
+
 import { isWsl } from "./isWsl.mjs";
 
 export const isValidSteamPath = (steamPath: string) =>

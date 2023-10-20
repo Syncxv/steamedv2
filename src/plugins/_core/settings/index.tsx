@@ -2,7 +2,9 @@ import { Devs } from "@utils/constants";
 import { transformSettings } from "@utils/misc";
 import { PluginDef, SettingsItem } from "@utils/types";
 
-export const plugin: PluginDef = {
+import { PluginsPage } from "../../../components/Settings/PluginsPage";
+
+export const plugin = {
     manifest: {
         name: "Settings",
         description: "Adds settings and stuff",
@@ -31,16 +33,16 @@ export const plugin: PluginDef = {
         },
     ],
 
+    settingsStuffs: null as Record<string, SettingsItem> | null,
+
     getSettingsObjects(): Record<string, SettingsItem> {
-        if (this.settingStuffs) return this.settingStuffs;
+        if (this.settingsStuffs) return this.settingsStuffs;
 
         return (this.settingsStuffs = {
             SteamedGeneral: transformSettings({
                 visible: true,
                 icon: () => <div>:|</div>,
-                content: () => {
-                    return <div>WOAH</div>;
-                },
+                content: PluginsPage,
                 route: "/settings/hehe",
                 title: "Steamed Settings",
             }),
@@ -50,4 +52,4 @@ export const plugin: PluginDef = {
     getSettingsStrings() {
         return ["Internal", ...Object.keys(this.getSettingsObjects())];
     },
-};
+} satisfies PluginDef & Record<string, any>

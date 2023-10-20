@@ -1,13 +1,14 @@
-import { GlobalRegistrator } from "@happy-dom/global-registrator";
-
 import { existsSync } from "node:fs";
 import fs from "node:fs/promises";
+
+import { GlobalRegistrator } from "@happy-dom/global-registrator";
+
 import { build } from "../build/build.mjs";
 import { getDefaultSteamPath, isValidSteamPath } from "./util/steamPath.mjs";
 
 const args = process.argv.slice(2);
 
-//TODO: test on windows
+// TODO: test on windows
 const steamPath = args.length > 0 ? args[0] : getDefaultSteamPath();
 
 function html(strings: TemplateStringsArray, ...values: string[]) {
@@ -45,7 +46,7 @@ async function main() {
 }
 
 export async function insertSteamed(steamPath: string) {
-    let steamedContents = await fs.readFile("dist/main.js", "utf-8");
+    const steamedContents = await fs.readFile("dist/main.js", "utf-8");
 
     await fs.writeFile(`${steamPath}/steamui/steamed.js`, steamedContents, {
         encoding: "utf-8",

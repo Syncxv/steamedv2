@@ -1,9 +1,9 @@
-import { Plugin } from "esbuild";
-import { BuildOptions } from "esbuild";
+import { BuildOptions, Plugin } from "esbuild";
 import { existsSync } from "fs";
 import { readdir } from "fs/promises";
-import { getDefaultSteamPath } from "../inject/util/steamPath.mjs";
+
 import { insertSteamed } from "../inject/index.mjs";
+import { getDefaultSteamPath } from "../inject/util/steamPath.mjs";
 
 export const watch = process.argv.includes("--watch");
 export const insertToSteam =

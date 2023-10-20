@@ -1,4 +1,5 @@
-import React from "react";
+import type React from "react";
+
 export interface Manifest {
     name: string;
     description: string;
@@ -30,14 +31,13 @@ export interface PatchReplacement {
     predicate?(): boolean;
 }
 
-export interface PluginDef {
+export type PluginDef = {
     manifest: Manifest;
     patches?: PluginPatch[];
     start?: () => void;
     stop?: () => void;
     commands?: Command[];
-    [key: string]: any;
-}
+} & Record<string, any>
 
 export interface Plugin extends PluginDef {
     patches: Patch[];

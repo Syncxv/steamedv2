@@ -1,6 +1,6 @@
-import process from "node:process";
-import os from "node:os";
 import fs from "node:fs";
+import os from "node:os";
+import process from "node:process";
 
 export const isWsl = () => {
     if (process.platform !== "linux") {

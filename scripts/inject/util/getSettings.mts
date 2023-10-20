@@ -1,5 +1,7 @@
-import vdfparser from "vdf-parser";
 import fs from "node:fs/promises";
+
+import vdfparser from "vdf-parser";
+
 import { isValidSteamPath } from "./steamPath.mjs";
 
 export async function getSettings(steamPath: string) {
