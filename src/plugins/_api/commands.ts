@@ -41,7 +41,7 @@ export const plugin: PluginDef = {
     ],
 
     getCommands() {
-        return Object.values(Steamed.Api.Commands.commands)
+        return Array.from(Steamed.Api.Commands.commands.values())
             .map((c) => ({
                 ...c,
                 strDescriptionToken: `#SteamedSlashCommandDescription_${c.name}`,

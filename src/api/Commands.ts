@@ -1,33 +1,37 @@
 import { Command } from "@utils/types";
 import { i18n, MessageClass } from "@webpack/common";
 
-export const commands: { [key: string]: Command } = {};
+export const commands = new Map<string, Command>();
 
 export const find = (cb: (c: Command) => boolean) =>
-    Object.values(commands).find(cb);
+    Array.from(commands.values()).find(cb);
 
 export const registerCommand = (cmd: Command) => {
-    if (commands[cmd.name]) throw Error(`Name ${cmd.name} already exists boy`);
+    if (commands.has(cmd.name)) throw Error(`Name ${cmd.name} already exists boy`);
     i18n.LocalizationManager.m_mapTokens.set(
         `SteamedSlashCommandDescription_${cmd.name}`,
         cmd.description,
     );
-    commands[cmd.name] = cmd;
+    commands.set(cmd.name, cmd);
 };
+
 export const unRegisterCommand = (name: string) => {
     let value: boolean;
-    commands[name]
-        ? (delete commands[name],
-          i18n.LocalizationManager.m_mapTokens.delete(
-              `SteamedSlashCommandDescription_${name}`,
-          ),
-          (value = true))
-        : (value = false);
+    if (commands.has(name)) {
+        commands.delete(name);
+        i18n.LocalizationManager.m_mapTokens.delete(
+            `SteamedSlashCommandDescription_${name}`,
+        );
+        value = true;
+    } else {
+        value = false;
+    }
     return value;
 };
 
 export const processCommand = async (thisObj: any) => {
     if (!thisObj.state.messageInput.startsWith("/")) return;
+
     const message: string = thisObj.state.messageInput;
     const [cmd, ...cmdArgs] = message.slice(1).split(" ");
     console.log(cmd, cmdArgs, MessageClass);
